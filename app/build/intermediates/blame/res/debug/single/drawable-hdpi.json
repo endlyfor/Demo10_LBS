@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_action_search.png",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-hdpi\\ic_action_search.png"
+    }
+]

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="D:\software\Android\AndroidStudioProjects\Demo10_LBS\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fd46ce18a075ffdc65a1758d6e694140d330b78c">
+        <dex dex="D:\software\Android\AndroidStudioProjects\Demo10_LBS\app\build\intermediates\pre-dexed\debug\instant-run_d1349cb305b35cea588bf522c44552aeb2aafd8a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\software\Android\sdk\extras\android\m2repository\com\android\support\support-v4\19.1.0\support-v4-19.1.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="85f201b380937e61a9dce6ca90ccf6872abbfb67">
+        <dex dex="D:\software\Android\AndroidStudioProjects\Demo10_LBS\app\build\intermediates\pre-dexed\debug\support-v4-19.1.0_be22657d576ef8fcbc5a2070b6a840c9da43f252.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="D:\software\Android\AndroidStudioProjects\Demo10_LBS\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="5373b30235d75e3035bd39e375d37f17d878405e">
+        <dex dex="D:\software\Android\AndroidStudioProjects\Demo10_LBS\app\build\intermediates\pre-dexed\debug\instant-run-bootstrap_a38c603aa19469557b42e4950c99273507e18af6.jar" />
+    </item>
+
+</items>

@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\software\Android\AndroidStudioProjects\Demo10_LBS\app\src\main\assets"/><source path="D:\software\Android\AndroidStudioProjects\Demo10_LBS\app\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\software\Android\AndroidStudioProjects\Demo10_LBS\app\src\debug\assets"/></dataSet></merger>
