@@ -39,4 +39,9 @@
         android:text="@string/defaultshow"
         android:textSize="18sp" />
 
+    <com.exams.demo10_lbs.BarChartView
+    android:id="@+id/bar_chart"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+
 </LinearLayout>

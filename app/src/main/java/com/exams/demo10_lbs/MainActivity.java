@@ -23,6 +23,7 @@ public class MainActivity extends Activity {
 	public TextView tView;
 	DataReceiver dataReceiver;// BroadcastReceiver对象
 	public LocationManager lManager;
+	public BarChartView mBarChartView;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class MainActivity extends Activity {
 		stopButton = (Button) findViewById(R.id.Stopbtn);
 		
 		tView = (TextView) findViewById(R.id.tv);
+		mBarChartView=(BarChartView)findViewById(R.id.bar_chart);
 
 		lManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		// 判断GPS是否正常启动
@@ -110,6 +112,43 @@ public class MainActivity extends Activity {
 				tView.setText("\t卫星在用数量:" + Satenum + "\n\t纬度:" + latitude
 						+ "\t经度:" + longitude + "\n\t精度:" + accuracy
 						+"\n\t速度:"+speed+ "\n\t更新时间:" + dateString);
+				int[] mPNR=bundledata.getIntArray("pnr");
+				float[] mSNR=bundledata.getFloatArray("snr");
+//				BarChartView.BarChartItemBean[] items = new BarChartView.BarChartItemBean[255];
+//				for(int i=0; i<255;i++){
+//					if(mPNR[i]!=0&&mSNR[i]!=0.0f)
+//					items[i]=new BarChartView.BarChartItemBean(String.valueOf(mPNR[i]), mSNR[i]);
+//				}
+
+				for(int i=0;i<mPNR.length;i++){
+					if(mPNR[i]!=0)
+						Log.i("item",String.valueOf(mPNR[i]));
+				}
+//               mBarChartView.setItems(items);
+				BarChartView barChartView = (BarChartView) findViewById(R.id.bar_chart);
+				BarChartView.BarChartItemBean[] items = new BarChartView.BarChartItemBean[]{
+
+						new BarChartView.BarChartItemBean("8", 30),
+						new BarChartView.BarChartItemBean("11", 15),
+						new BarChartView.BarChartItemBean("14", 60),
+						new BarChartView.BarChartItemBean("17", 60),
+						new BarChartView.BarChartItemBean("27", 60),
+						new BarChartView.BarChartItemBean("31", 45),
+						new BarChartView.BarChartItemBean("37", 50),
+						new BarChartView.BarChartItemBean("47", 30),
+						new BarChartView.BarChartItemBean("57", 20),
+						new BarChartView.BarChartItemBean("67", 10),
+						new BarChartView.BarChartItemBean("77", 45),
+						new BarChartView.BarChartItemBean("87", 60),
+						new BarChartView.BarChartItemBean("97", 60),
+						new BarChartView.BarChartItemBean("100", 60),
+						new BarChartView.BarChartItemBean("101", 58),
+						new BarChartView.BarChartItemBean("102", 46),
+						new BarChartView.BarChartItemBean("108", 26),
+						new BarChartView.BarChartItemBean("112", 33),
+
+				};
+				barChartView.setItems(items);
 			}
 
 		}

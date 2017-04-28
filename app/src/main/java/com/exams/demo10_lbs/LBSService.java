@@ -40,6 +40,8 @@ public class LBSService extends Service {
 	private NotificationManager mNM;
 	boolean flag;
 	CommandReceiver cmdReceiver;
+	private float[] mSNR;
+	private int[] mPRN;
 
 	@Override
 	public void onCreate() {
@@ -175,17 +177,24 @@ public class LBSService extends Service {
 					gStatus = locationManager.getGpsStatus(null);
 					// 获取默认最大卫星数
 					int maxSatellites = gStatus.getMaxSatellites();
+					mSNR=new float[maxSatellites];
+					mPRN=new int[maxSatellites];
 					Iterable<GpsSatellite> iterable = gStatus.getSatellites();
 					Iterator<GpsSatellite> iterator = iterable.iterator();
 					int x = 0;
+					int count=0;
+
 
 					while (iterator != null && iterator.hasNext()
 							&& x <= maxSatellites) {
-						GpsSatellite gpsSatellite = (GpsSatellite) iterator
+						GpsSatellite gpsSatellite = iterator
 								.next();
+						mSNR[count]=gpsSatellite.getSnr();
+						mPRN[count]=gpsSatellite.getPrn();
+						Log.i("SNR",String.valueOf(mSNR[count]));
+						count++;
 						if (gpsSatellite.usedInFix())
 							x++;
-
 					}
 					String latitude, longitude, accuracy, speed;
 					if (location != null) {
@@ -209,6 +218,8 @@ public class LBSService extends Service {
 					Date nowDate=new Date();
 					String dateString=sDateFormat.format(nowDate);
 					bundle.putString("date",  dateString+ "");
+					bundle.putIntArray("pnr",mPRN);
+					bundle.putFloatArray("snr",mSNR);
 					intent.putExtras(bundle);
 					Log.d(TAG,"bundleString:"+location+"latitude:"+latitude+"longitude:"+longitude);
 					sendBroadcast(intent);// 发送广播
