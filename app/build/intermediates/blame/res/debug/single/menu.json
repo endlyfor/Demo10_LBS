@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\menu\\gps_menu.xml",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\menu\\gps_menu.xml"
+    },
+    {
         "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\menu\\activity_main.xml",
         "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\menu\\activity_main.xml"
     }

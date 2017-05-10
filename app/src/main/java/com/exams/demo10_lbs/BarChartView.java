@@ -510,9 +510,9 @@ public class BarChartView extends View {
      */
     static class BarChartItemBean {
         private String itemType;
-        private int itemValue;
+        private float itemValue;
 
-        public BarChartItemBean(String itemType, int itemValue) {
+        public BarChartItemBean(String itemType, float itemValue) {
             this.itemType = itemType;
             this.itemValue = itemValue;
         }

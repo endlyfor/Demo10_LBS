@@ -6,5 +6,9 @@
     {
         "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\ic_launcher.9.png",
         "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-mdpi\\ic_launcher.9.png"
+    },
+    {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi\\arrow_up.png",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-mdpi\\arrow_up.png"
     }
 ]

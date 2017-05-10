@@ -194,7 +194,7 @@ public class LBSService extends Service {
 						Log.i("SNR",String.valueOf(mSNR[count]));
 						count++;
 						if (gpsSatellite.usedInFix())
-							x++;
+						x++;
 					}
 					String latitude, longitude, accuracy, speed;
 					if (location != null) {
@@ -202,6 +202,7 @@ public class LBSService extends Service {
 						longitude = location.getLongitude() + "";
 						accuracy = location.getAccuracy() + "";
 						speed = location.getSpeed() + "";
+
 					} else {
 						latitude = "0.0";
 						longitude = "0.0";
