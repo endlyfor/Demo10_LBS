@@ -2,5 +2,25 @@
     {
         "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_launcher.png",
         "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_flag_russia.png",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-ldpi\\ic_flag_russia.png"
+    },
+    {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_flag_usa.png",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-ldpi\\ic_flag_usa.png"
+    },
+    {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_flag_galileo.png",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-ldpi\\ic_flag_galileo.png"
+    },
+    {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_flag_china.png",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-ldpi\\ic_flag_china.png"
+    },
+    {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\ic_flag_japan.png",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\drawable-ldpi\\ic_flag_japan.png"
     }
 ]

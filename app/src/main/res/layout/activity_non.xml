@@ -6,7 +6,7 @@
 
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/tv_non"
         android:layout_width="fill_parent"
         android:layout_height="70dp"
         android:layout_marginLeft="4dp"
@@ -14,10 +14,6 @@
         android:text="@string/defaultshow"
         android:textSize="10sp"/>
 
-    <com.exams.demo10_lbs.BarChartView
-        android:id="@+id/bar_chart"
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
-        />
+
 
 </LinearLayout>

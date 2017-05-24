@@ -26,7 +26,7 @@ public class LBSService extends Service {
 
 	public static final String TAG = "LBSService";
 	// 30000ms --minimum time interval between location updates, in milliseconds
-	private static final long minTime = 5000;
+	private static final long minTime = 500;
 	// 最小变更距离 10m --minimum distance between location updates, in meters
 	private static final float minDistance = 10;
 
@@ -160,7 +160,7 @@ public class LBSService extends Service {
 				while (flag) {
 
 					try {// 睡眠一段时间
-						Thread.sleep(5000);
+						Thread.sleep(500);
 
 					} catch (Exception e) {
 

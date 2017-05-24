@@ -21,6 +21,10 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Switch;
+import android.widget.TextView;
+
+import static android.R.attr.type;
 
 /**
  * 自定义组件：条形统计图
@@ -34,7 +38,8 @@ public class BarChartView extends View {
     private float maxValue;
     //max height of the bar
     private int maxHeight;
-       private int[] mBarColors = new int[]{Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.CYAN};
+       private int[] mBarColors = new int[]{Color.rgb(255,97,0),Color.rgb(56,94,15),Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.CYAN};
+
   //  private int[] mBarColors = new int[]{Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE};
 
     private Paint barPaint, linePaint, textPaint;
@@ -54,7 +59,7 @@ public class BarChartView extends View {
      */
     private float x_index_startY, y_index_startX;
 
-    private Bitmap arrowBmp;
+    private Bitmap arrowBmp,chinaBmp,japanBmp,usaBmp,russiaBmp,galileoBmp;
     private Rect x_index_arrowRect, y_index_arrowRect;
 
     private static final int BG_COLOR = Color.parseColor("#E5E5E5");
@@ -104,6 +109,11 @@ public class BarChartView extends View {
         rightWhiteRect = new Rect(screenW - leftMargin, 0, screenW, screenH);
 
         arrowBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.arrow_up);
+        chinaBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_flag_china);
+        usaBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_flag_usa);
+        russiaBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_flag_russia);
+        japanBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_flag_japan);
+        galileoBmp = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_flag_galileo);
 
 
 
@@ -132,11 +142,20 @@ public class BarChartView extends View {
         Log.i("mItems.length ",str);
         for (int i = 0; i < mItems.length; i++) {
             //draw bar rect
-            barRect.left = (int) y_index_startX + barItemWidth * i + barSpace * (i + 1) - (int) leftMoving;
+            if((int)leftMoving<0){
+                 barRect.left = (int) y_index_startX + barItemWidth * i + barSpace * (i + 1) ;
+            }else{
+                barRect.left = (int) y_index_startX + barItemWidth * i + barSpace * (i + 1) - (int) leftMoving;
+            }
+
+
+
+
             barRect.top = topMargin * 2 + (int) (maxHeight * (1.0f - mItems[i].itemValue / maxValue));
             barRect.right = barRect.left + barItemWidth;
 
-            barPaint.setColor(mBarColors[i % mBarColors.length]);
+          //  barPaint.setColor(mBarColors[i % mBarColors.length]);
+            setColor(mItems[i].itemValue);
             canvas.drawRect(barRect, barPaint);
 
             //draw type text
@@ -155,7 +174,32 @@ public class BarChartView extends View {
             String valueText = String.valueOf(mItems[i].itemValue);
             canvas.drawText(valueText, barRect.left - (textPaint.measureText(valueText) - barItemWidth) / 2,
                     barRect.top - smallMargin, textPaint);
+
+            //draw flag
+            Rect rect=new Rect();
+            rect.set(barRect.left,barRect.top-smallMargin-70,barRect.right,barRect.top-smallMargin-30 );
+            GnssType type=getGnssType(Integer.valueOf(mItems[i].itemType));
+            switch (type) {
+                case NAVSTAR:
+                    canvas.drawBitmap(usaBmp, null, rect, null);
+                    break;
+                case GLONASS:
+                    canvas.drawBitmap(russiaBmp, null, rect, null);
+                    break;
+                case QZSS:
+                    canvas.drawBitmap(japanBmp, null, rect, null);
+                    break;
+                case BEIDOU:
+                    canvas.drawBitmap(chinaBmp, null, rect, null);
+                    break;
+                case GALILEO:
+                    canvas.drawBitmap(galileoBmp, null, rect, null);
+                    break;
+            }
+
         }
+
+
 
         //draw left white space and right white space
         int c = barPaint.getColor();
@@ -296,7 +340,7 @@ public class BarChartView extends View {
             leftMoving = 0;
         }
 
-        if (leftMoving > (maxRight - minRight)) {
+         if (leftMoving > (maxRight - minRight)) {
             leftMoving = maxRight - minRight;
         }
     }
@@ -345,16 +389,19 @@ public class BarChartView extends View {
         //The min width of spacing.
         int minBarSpacing = ScreenUtils.dp2px(getContext(), 10);
 
-        barItemWidth = (screenW - leftMargin * 2) / (itemCount + 3);
-        barSpace = (screenW - leftMargin * 2 - barItemWidth * itemCount) / (itemCount + 1);
+        //barItemWidth = (screenW - leftMargin * 2) / (itemCount + 3);
+        barItemWidth=50;
+        // barSpace = (screenW - leftMargin * 2 - barItemWidth * itemCount) / (itemCount + 1);
+        barSpace=20;
 
-        if (barItemWidth < minBarWidth || barSpace < minBarSpacing) {
-            barItemWidth = minBarWidth;
-            barSpace = minBarSpacing;
-        }
+//        if (barItemWidth < minBarWidth || barSpace < minBarSpacing) {
+//            barItemWidth = minBarWidth;
+//            barSpace = minBarSpacing;
+//        }
 
         maxRight = (int) y_index_startX + lineStrokeWidth + (barSpace + barItemWidth) * mItems.length;
         minRight = screenW - leftMargin - barSpace;
+        Log.i("test",maxRight+"   "+minRight);
     }
 
     /**
@@ -362,23 +409,25 @@ public class BarChartView extends View {
      */
     private void subStatusBarHeight() {
         //The height of the status bar
-        int statusHeight = ScreenUtils.getStatusBarHeight((Activity) getContext());
-        String str1 = String.valueOf(statusHeight);
-        Log.i(" statusHeight",str1);
+      //  int statusHeight = ScreenUtils.getStatusBarHeight((Activity) getContext());
+     //  String str1 = String.valueOf(statusHeight);
+       // Log.i("statusHeight",str1);
         //The height of the actionBar
       //  ActionBar ab = ((AppCompatActivity) getContext()).getSupportActionBar();
       //  int abHeight = ab == null ? 0 : ab.getHeight();
         int abHeight=96;
-        str1 = String.valueOf(abHeight);
+        String str1 = String.valueOf(abHeight);
         Log.i(" abHeight",str1);
-        screenH -= (statusHeight + abHeight);
+        screenH -= (abHeight);
         str1 = String.valueOf(screenH);
         Log.i(" screenH",str1);
 
         barRect.top = topMargin * 2;
 
         /*barRect.bottom = screenH - topMargin * 3;*/
-        barRect.bottom = screenH - topMargin;// add 横屏以后空白太多topMargin=80
+
+        int h=150;
+        barRect.bottom = screenH - topMargin-h;// add 横屏以后空白太多topMargin=80
         maxHeight = barRect.bottom - barRect.top;
 
         x_index_startY = barRect.bottom;
@@ -409,6 +458,55 @@ public class BarChartView extends View {
         y_index_arrowRect = new Rect((int) (y_index_startX - 5), topMargin / 2 - 20,
                 (int) (y_index_startX + 5), topMargin / 2);
 
+    }
+
+    /**
+     * Set the color by SNR
+     * new int[]{Color.rgb(255,97,0),Color.rgb(56,94,15),Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.CYAN};
+     */
+    private void setColor(float SNR){
+        if(SNR>=0.0&&SNR<10.0)
+            barPaint.setColor(mBarColors[2]);
+        if(SNR>=10.0&&SNR<20.0)
+            barPaint.setColor(mBarColors[0]);
+        if(SNR>=20.0&&SNR<30.0)
+            barPaint.setColor(mBarColors[1]);
+        if(SNR>=30.0&&SNR<40.0)
+            barPaint.setColor(mBarColors[5]);
+        if(SNR>=40.0&&SNR<45.0)
+            barPaint.setColor(mBarColors[4]);
+        if(SNR>=45.0&&SNR<48.0)
+            barPaint.setColor(mBarColors[7]);
+        if(SNR>=48.0&&SNR<99.0)
+            barPaint.setColor(mBarColors[6]);
+
+    }
+
+    /**
+     * Returns the Global Navigation Satellite System (GNSS) for a satellite given the PRN.  For
+     * Android 6.0.1 (API Level 23) and lower.  Android 7.0 and higher should use
+     *
+     * @param prn PRN value provided by the GpsSatellite.getPrn() method
+     * @return GnssType for the given PRN
+     */
+
+    public static GnssType getGnssType(int prn) {
+        if (prn >= 65 && prn <= 96) {
+            // See Issue #26 for details
+            return GnssType.GLONASS;
+        } else if (prn >= 193 && prn <= 200) {
+            // See Issue #54 for details
+            return GnssType.QZSS;
+        } else if (prn >= 201 && prn <= 235) {
+            // See Issue #54 for details
+            return GnssType.BEIDOU;
+        } else if (prn >= 301 && prn <= 330) {
+            // See https://github.com/barbeau/gpstest/issues/58#issuecomment-252235124 for details
+            return GnssType.GALILEO;
+        } else {
+            // Assume US NAVSTAR for now, since we don't have any other info on sat-to-PRN mappings
+            return GnssType.NAVSTAR;
+        }
     }
 
     private float getRangeTop(float value) {
@@ -517,4 +615,6 @@ public class BarChartView extends View {
             this.itemValue = itemValue;
         }
     }
+
+
 }

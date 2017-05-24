@@ -1,5 +1,9 @@
 [
     {
+        "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_non.xml",
+        "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\layout\\activity_non.xml"
+    },
+    {
         "merged": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\build\\intermediates\\res\\merged\\debug\\layout\\activity_main.xml",
         "source": "D:\\software\\Android\\AndroidStudioProjects\\Demo10_LBS\\app\\src\\main\\res\\layout\\activity_main.xml"
     },
