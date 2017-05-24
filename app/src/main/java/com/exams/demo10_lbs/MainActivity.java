@@ -36,22 +36,23 @@ public class MainActivity extends Activity {
     public BarChartView mBarChartView;
     private String mTmpSatenum = "0";
     private Switch mSwitch;  //GPS on/off switch
-    boolean mStarted ;
-
+    boolean mStarted;
+    ArrayList<BarChartView.BarChartItemBean> mArrayItems;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
+        //  requestWindowFeature(Window.FEATURE_NO_TITLE);//隐藏标题
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);//设置全屏
-        setContentView(R.layout.activity_non);
+        setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         startbtnButton = (Button) findViewById(R.id.Startbtn);
         stopButton = (Button) findViewById(R.id.Stopbtn);
 
+        mBarChartView = (BarChartView) findViewById(R.id.bar_chart);
+        tView = (TextView) findViewById(R.id.tv);
 
-        tView = (TextView) findViewById(R.id.tv_non);
 
         lManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         Point point = new Point();
@@ -78,8 +79,8 @@ public class MainActivity extends Activity {
 //        };
         //barChartView.setItems(items);
         startService();
-        tView.setText("\t卫星在用数量:" + " "+ "\n\t纬度:" + " "
-                + "\t经度:" + " " + "\n\t精度:" +" "
+        tView.setText("\t卫星在用数量:" + " " + "\n\t纬度:" + " "
+                + "\t经度:" + " " + "\n\t精度:" + " "
                 + "\t速度:" + " " + "\t更新时间:" + " ");
 
 //        startbtnButton.setOnClickListener(new View.OnClickListener() {
@@ -103,8 +104,8 @@ public class MainActivity extends Activity {
     }
 
     private void startService() {
-      //  startbtnButton.setEnabled(false);
-      //  stopButton.setEnabled(true);
+        //  startbtnButton.setEnabled(false);
+        //  stopButton.setEnabled(true);
         Intent i = new Intent(this, LBSService.class);
         this.startService(i);
         Log.i(TAG, "in startService method.");
@@ -113,20 +114,20 @@ public class MainActivity extends Activity {
             IntentFilter filter = new IntentFilter();// 创建IntentFilter对象
             filter.addAction("com.exams.demo10_lbs");
             registerReceiver(dataReceiver, filter);// 注册Broadcast Receiver
-            mStarted = true;
+           // mStarted = true;
         }
     }
 
     private void stopService() {
-      //  startbtnButton.setEnabled(true);
-     //   stopButton.setEnabled(false);
+        //  startbtnButton.setEnabled(true);
+        //   stopButton.setEnabled(false);
         Intent i = new Intent(this, LBSService.class);
         this.stopService(i);
         Log.i(TAG, "in stopService method.");
         if (dataReceiver != null) {
             unregisterReceiver(dataReceiver);// 取消注册Broadcast Receiver
             dataReceiver = null;
-            mStarted = false;
+          //  mStarted = false;
         }
     }
 
@@ -151,12 +152,12 @@ public class MainActivity extends Activity {
                 mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         // Turn GPS on or off
-                        if (!isChecked && mStarted) {
-                            setContentView(R.layout.activity_non);
+                        if (!isChecked) {
+                           setContentView(R.layout.activity_main);
                             stopService();
 
                         } else {
-                            if (isChecked && !mStarted) {
+                            if (isChecked ) {
 
                                 startService();
                             }
@@ -175,6 +176,7 @@ public class MainActivity extends Activity {
 
             mBarChartView = (BarChartView) findViewById(R.id.bar_chart);
             tView = (TextView) findViewById(R.id.tv);
+
             Bundle bundledata = intent.getExtras();
             if (bundledata != null) {
                 String latitude = bundledata.getString("latitude");
@@ -183,7 +185,8 @@ public class MainActivity extends Activity {
                 String speed = bundledata.getString("speed");
                 String Satenum = bundledata.getString("Satenum");
                 String dateString = bundledata.getString("date");
-
+                int[] mPNR = bundledata.getIntArray("pnr");
+                float[] mSNR = bundledata.getFloatArray("snr");
                 /*** 去除0卫星 **/
 //				if(!Satenum.equals("0")){
 //					mTmpSatenum=Satenum;
@@ -191,40 +194,41 @@ public class MainActivity extends Activity {
 //					Satenum=mTmpSatenum;
 //				}
 
-                tView.setText("\t卫星在用数量:" + Satenum + "\n\t纬度:" + latitude
-                        + "\t经度:" + longitude + "\n\t精度:" + accuracy
-                        + "\t速度:" + speed + "\t更新时间:" + dateString);
-                int[] mPNR = bundledata.getIntArray("pnr");
-                float[] mSNR = bundledata.getFloatArray("snr");
 
 
 
 
-                ArrayList<BarChartView.BarChartItemBean> mArrayItems = new ArrayList<BarChartView.BarChartItemBean>();
+                    mArrayItems = new ArrayList<BarChartView.BarChartItemBean>();
+                    for (int i = 0; i < mPNR.length; i++) {
+                        if (mPNR[i] != 0 && mSNR[i] != 0.0f)
+                            //items[i]=new BarChartView.BarChartItemBean(String.valueOf(mPNR[i]), mSNR[i]);
+                            mArrayItems.add(new BarChartView.BarChartItemBean(String.valueOf(mPNR[i]), mSNR[i]));
+                    }
+
+                    BarChartView.BarChartItemBean[] items = new BarChartView.BarChartItemBean[mArrayItems.size()];
+                    int count = 0;
+                    for (BarChartView.BarChartItemBean tmp : mArrayItems) {
+                        items[count] = tmp;
+                        count++;
+                    }
+                    tView.setText("\t卫星在用数量:" + Satenum + "\n\t纬度:" + latitude
+                            + "\t经度:" + longitude + "\n\t精度:" + accuracy
+                            + "\t速度:" + speed + "\t更新时间:" + dateString);
+
                 for (int i = 0; i < mPNR.length; i++) {
-                    if (mPNR[i] != 0 && mSNR[i] != 0.0f)
-                        //items[i]=new BarChartView.BarChartItemBean(String.valueOf(mPNR[i]), mSNR[i]);
-                        mArrayItems.add(new BarChartView.BarChartItemBean(String.valueOf(mPNR[i]), mSNR[i]));
+                    if (mPNR[i] != 0)
+                        Log.i("item", String.valueOf(mPNR[i]));
                 }
 
-                BarChartView.BarChartItemBean[] items = new BarChartView.BarChartItemBean[mArrayItems.size()];
-                int count = 0;
-                for (BarChartView.BarChartItemBean tmp : mArrayItems) {
-                    items[count] = tmp;
-                    count++;
+
+                    mBarChartView.setItems(items);
                 }
-//
-//                for (int i = 0; i < mPNR.length; i++) {
-//                    if (mPNR[i] != 0)
-//                        Log.i("item", String.valueOf(mPNR[i]));
-//                }
-                mBarChartView.setItems(items);
 
 
             }
 
         }
-    }
+
 
     @Override
     protected void onStart() {
