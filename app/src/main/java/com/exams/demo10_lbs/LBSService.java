@@ -165,7 +165,7 @@ public class LBSService extends Service {
 						e.printStackTrace();
 
 					}
-
+                    Log.i("test","thread running");
 					Intent intent = new Intent();// 创建Intent对象
 
 					intent.setAction("com.exams.demo10_lbs");
