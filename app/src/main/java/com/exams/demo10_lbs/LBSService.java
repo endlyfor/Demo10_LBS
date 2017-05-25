@@ -75,6 +75,10 @@ public class LBSService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
+
+
+
+
 		IntentFilter filter = new IntentFilter();// 创建IntentFilter对象
 
 		filter.addAction("com.exams.demo10_lbs.LBSService");
@@ -116,9 +120,11 @@ public class LBSService extends Service {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-			int cmd = intent.getIntExtra("cmd", -1);// 获取Extra信息
+			//Log.i("thread_run?","thread stop"+"  "+flag);
+			int cmd = intent.getIntExtra("cmd",-1);// 获取Extra信息
 			if (cmd == MainActivity.CMD_STOP_SERVICE) {// 如果发来的消息是停止服务
 				flag = false;// 停止线程
+				Log.i("thread_run?","thread stop"+"  "+flag);
 				stopSelf();// 停止服务
 			}
 		}// 继承自BroadcastReceiver的子类
@@ -214,7 +220,8 @@ public class LBSService extends Service {
 					bundle.putString("longitude", longitude);
 					bundle.putString("accuracy", accuracy + "m");
 					bundle.putString("speed", speed + "m/s");
-					bundle.putString("Satenum", x + "个");
+					bundle.putString("Satenum_inUse", x + "个");
+					bundle.putString("Satenum_inView",count+"个");
 					SimpleDateFormat sDateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					Date nowDate=new Date();
 					String dateString=sDateFormat.format(nowDate);

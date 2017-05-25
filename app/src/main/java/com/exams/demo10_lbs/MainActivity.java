@@ -9,6 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Point;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Message;
 import android.provider.Settings;
 import android.support.v4.view.MenuItemCompat;
 import android.util.Log;
@@ -20,17 +21,24 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
+import java.util.logging.Handler;
 
 public class MainActivity extends Activity {
     public static final int CMD_STOP_SERVICE = 0;
 
     public static final String TAG = "MainActivity";
     public Button startbtnButton, stopButton;
-    public TextView tView;
+    public TableLayout tView;
+    public TextView lat,lat_label,lng,lng_label,accuracy_lable,accuracy,speed_label,speed,satnum_inuse_label,satnum_inuse,satnum_inview_label,satnum_inview,time;
+    public TableRow row_1;
     DataReceiver dataReceiver;// BroadcastReceiver对象
     public LocationManager lManager;
     public BarChartView mBarChartView;
@@ -47,11 +55,19 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-        startbtnButton = (Button) findViewById(R.id.Startbtn);
-        stopButton = (Button) findViewById(R.id.Stopbtn);
+//        startbtnButton = (Button) findViewById(R.id.Startbtn);
+//        stopButton = (Button) findViewById(R.id.Stopbtn);
+//
+//        mBarChartView = (BarChartView) findViewById(R.id.bar_chart);
+//        tView = (TableLayout) findViewById(R.id.tv1);
+//        row_1=(TableRow)findViewById(R.id.row_1);
+//        lat_label=(TextView)findViewById(R.id.lat_label);
+//        lat=(TextView)findViewById(R.id.lat);
+//        lng_label=(TextView)findViewById(R.id.lng_label);
+//        lng=(TextView)findViewById(R.id.lng);
 
-        mBarChartView = (BarChartView) findViewById(R.id.bar_chart);
-        tView = (TextView) findViewById(R.id.tv);
+
+
 
 
         lManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -70,36 +86,12 @@ public class MainActivity extends Activity {
             return;
         }
 
-//        BarChartView barChartView = (BarChartView) findViewById(R.id.bar_chart);
-//        BarChartView.BarChartItemBean[] items = new BarChartView.BarChartItemBean[]{
-//
-//                new BarChartView.BarChartItemBean("8", 30),
-//
-//
-//        };
-        //barChartView.setItems(items);
-        startService();
-        tView.setText("\t卫星在用数量:" + " " + "\n\t纬度:" + " "
-                + "\t经度:" + " " + "\n\t精度:" + " "
-                + "\t速度:" + " " + "\t更新时间:" + " ");
 
-//        startbtnButton.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//
-//                startService();
-//
-//            }
-//        });
-//        stopButton.setOnClickListener(new View.OnClickListener() {
-//
-//            public void onClick(View v) {
-//                // TODO Auto-generated method stub
-//                stopService();
-//
-//            }
-//        });
+        startService();
+//        tView.setText("\t卫星在用数量:" + " " + "\n\t纬度:" + " "
+//                + "\t经度:" + " " + "\n\t精度:" + " "
+//                + "\t速度:" + " " + "\t更新时间:" + " ");
+
 
     }
 
@@ -121,14 +113,19 @@ public class MainActivity extends Activity {
     private void stopService() {
         //  startbtnButton.setEnabled(true);
         //   stopButton.setEnabled(false);
-        Intent i = new Intent(this, LBSService.class);
-        this.stopService(i);
+
+        Intent intent = new Intent();// 创建Intent对象
+        intent.setAction("com.exams.demo10_lbs.LBSService");
+        intent.putExtra("cmd",CMD_STOP_SERVICE);
+        sendBroadcast(intent);
         Log.i(TAG, "in stopService method.");
         if (dataReceiver != null) {
             unregisterReceiver(dataReceiver);// 取消注册Broadcast Receiver
             dataReceiver = null;
           //  mStarted = false;
         }
+        Intent i = new Intent(this, LBSService.class);
+        this.stopService(i);
     }
 
     @Override
@@ -175,16 +172,27 @@ public class MainActivity extends Activity {
             setContentView(R.layout.activity_main);
 
             mBarChartView = (BarChartView) findViewById(R.id.bar_chart);
-            tView = (TextView) findViewById(R.id.tv);
+            tView = (TableLayout) findViewById(R.id.tv1);
+            row_1=(TableRow)findViewById(R.id.row_1);
+            lat_label=(TextView)findViewById(R.id.lat_label);
+            lat=(TextView)findViewById(R.id.lat);
+            lng_label=(TextView)findViewById(R.id.lng_label);
+            lng=(TextView)findViewById(R.id.lng);
+            accuracy=(TextView)findViewById(R.id.accuracy);
+            speed=(TextView) findViewById(R.id.speed);
+            satnum_inview=(TextView) findViewById(R.id.satnum_inview);
+            satnum_inuse=(TextView) findViewById(R.id.satnum_inuse);
+            time=(TextView)findViewById(R.id.time);
 
             Bundle bundledata = intent.getExtras();
             if (bundledata != null) {
-                String latitude = bundledata.getString("latitude");
-                String longitude = bundledata.getString("longitude");
-                String accuracy = bundledata.getString("accuracy");
-                String speed = bundledata.getString("speed");
-                String Satenum = bundledata.getString("Satenum");
-                String dateString = bundledata.getString("date");
+                String Latitude = bundledata.getString("latitude");
+                String Longitude = bundledata.getString("longitude");
+                String Accuracy = bundledata.getString("accuracy");
+                String Speed = bundledata.getString("speed");
+                String Satenum_inUse = bundledata.getString("Satenum_inUse");
+                String Satenum_inView = bundledata.getString("Satenum_inView");
+                String DateString = bundledata.getString("date");
                 int[] mPNR = bundledata.getIntArray("pnr");
                 float[] mSNR = bundledata.getFloatArray("snr");
                 /*** 去除0卫星 **/
@@ -211,9 +219,24 @@ public class MainActivity extends Activity {
                         items[count] = tmp;
                         count++;
                     }
-                    tView.setText("\t卫星在用数量:" + Satenum + "\n\t纬度:" + latitude
-                            + "\t经度:" + longitude + "\n\t精度:" + accuracy
-                            + "\t速度:" + speed + "\t更新时间:" + dateString);
+//                    tView.setText("\t卫星在用数量:" + Satenum + "\n\t纬度:" + latitude
+//                            + "\t经度:" + longitude + "\n\t精度:" + accuracy
+//                            + "\t速度:" + speed + "\t更新时间:" + dateString);
+//                String string=getResources().getString(R.string.lat);
+//
+//                String string1=String.format(string,Float.valueOf(latitude));
+               // String.format(getString(R.string.lat), Float.valueOf(latitude));
+
+                lat.setText(Latitude);
+                lng.setText(Longitude);
+                accuracy.setText(Accuracy);
+                speed.setText(Speed);
+                satnum_inview.setText(Satenum_inView);
+                satnum_inuse.setText(Satenum_inUse);
+                time.setText(DateString);
+
+
+               // lng.setText(longitude);
 
                 for (int i = 0; i < mPNR.length; i++) {
                     if (mPNR[i] != 0)
@@ -241,5 +264,7 @@ public class MainActivity extends Activity {
         // TODO Auto-generated method stub
         super.onStop();
     }
+
+
 
 }

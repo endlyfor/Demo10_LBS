@@ -4,6 +4,7 @@
     <string name="defaultshow">数据显示区域</string>
     <string name="description">GPS经纬度获取服,60秒界面更新一次数据，而后台GPS更新服务是每30秒更新一次GPS数据</string>
     <string name="hello_world">Hello world!</string>
+    <string name="lat">%1$.5f</string>
     <string name="lbsservice">启动LBS定位服务</string>
     <string name="menu_settings">Settings</string>
     <string name="showonmap">在地图上显示</string>

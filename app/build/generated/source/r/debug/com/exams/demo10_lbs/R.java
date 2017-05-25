@@ -23,12 +23,29 @@ public final class R {
     public static final class id {
         public static final int Startbtn=0x7f070001;
         public static final int Stopbtn=0x7f070002;
+        public static final int accuracy=0x7f07000d;
+        public static final int accuracy_label=0x7f07000c;
         public static final int bar_chart=0x7f070004;
-        public static final int gps_switch=0x7f070006;
-        public static final int menu_settings=0x7f070007;
+        public static final int gps_switch=0x7f070017;
+        public static final int lat=0x7f070008;
+        public static final int lat_label=0x7f070007;
+        public static final int lng=0x7f07000a;
+        public static final int lng_label=0x7f070009;
+        public static final int menu_settings=0x7f070018;
+        public static final int row_1=0x7f070006;
+        public static final int row_2=0x7f07000b;
+        public static final int row_3=0x7f070010;
+        public static final int satnum_inuse=0x7f070014;
+        public static final int satnum_inuse_label=0x7f070013;
+        public static final int satnum_inview=0x7f070012;
+        public static final int satnum_inview_label=0x7f070011;
         public static final int showtv=0x7f070000;
+        public static final int speed=0x7f07000f;
+        public static final int speed_label=0x7f07000e;
+        public static final int time=0x7f070015;
         public static final int tv=0x7f070003;
-        public static final int tv_non=0x7f070005;
+        public static final int tv1=0x7f070005;
+        public static final int tv_non=0x7f070016;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -43,12 +60,13 @@ public final class R {
         public static final int defaultshow=0x7f050001;
         public static final int description=0x7f050002;
         public static final int hello_world=0x7f050003;
-        public static final int lbsservice=0x7f050004;
-        public static final int menu_settings=0x7f050005;
-        public static final int showonmap=0x7f050006;
-        public static final int startbtn=0x7f050007;
-        public static final int stopbtn=0x7f050008;
-        public static final int title_activity_main=0x7f050009;
+        public static final int lat=0x7f050004;
+        public static final int lbsservice=0x7f050005;
+        public static final int menu_settings=0x7f050006;
+        public static final int showonmap=0x7f050007;
+        public static final int startbtn=0x7f050008;
+        public static final int stopbtn=0x7f050009;
+        public static final int title_activity_main=0x7f05000a;
     }
     public static final class style {
         public static final int AppTheme=0x7f040000;

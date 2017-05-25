@@ -12,5 +12,6 @@
     <string name="showonmap">在地图上显示</string>
 
     <string name="description">GPS经纬度获取服,60秒界面更新一次数据，而后台GPS更新服务是每30秒更新一次GPS数据</string>
+    <string name="lat">%1$.5f</string>
 
 </resources>

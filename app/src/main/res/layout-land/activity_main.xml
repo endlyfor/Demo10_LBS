@@ -5,19 +5,126 @@
               android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="fill_parent"
-        android:layout_height="70dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/defaultshow"
-        android:textSize="10sp"/>
+    <!--<TextView-->
+    <!--android:id="@+id/tv"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="70dp"-->
+    <!--android:layout_marginLeft="4dp"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:text="@string/defaultshow"-->
+    <!--android:textSize="10sp"/>-->
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  xmlns:tools="http://schemas.android.com/tools"
+                  android:layout_width="match_parent"
+                  android:layout_height="80dp"
+                  android:orientation="horizontal">
+
+        <TableLayout android:id="@+id/tv1" android:layout_width="450dp"
+                     android:layout_height="70dp">
+            <TableRow android:id="@+id/row_1" android:layout_width="match_parent" android:layout_marginRight="0.5dp" >
+                <TextView
+                    android:id="@+id/lat_label"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:padding="2dp" android:text="维度"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/lat"
+                    android:layout_width="150dp"
+
+                    android:layout_height="match_parent" android:padding="2dp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/lng_label"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:padding="2dp" android:text="经度"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/lng"
+                    android:layout_width="150dp"
+
+                    android:layout_height="match_parent" android:padding="2dp"
+                    android:textStyle="bold"/>
+
+            </TableRow>
+
+
+            <TableRow android:id="@+id/row_2" android:layout_marginRight="0.5dp" >
+                <TextView
+                    android:id="@+id/accuracy_label"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:padding="2dp" android:text="精度"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/accuracy"
+                    android:layout_width="150dp"
+
+                    android:layout_height="match_parent" android:padding="2dp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/speed_label"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:padding="2dp" android:text="速度"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/speed"
+                    android:layout_width="150dp"
+
+                    android:layout_height="match_parent" android:padding="2dp"
+                    android:textStyle="bold"/>
+
+            </TableRow>
+
+
+            <TableRow android:id="@+id/row_3" android:layout_marginRight="0.5dp" >
+                <TextView
+                    android:id="@+id/satnum_inview_label"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:padding="2dp" android:text="卫星总数"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/satnum_inview"
+                    android:layout_width="150dp"
+
+                    android:layout_height="match_parent" android:padding="2dp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/satnum_inuse_label"
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:padding="2dp" android:text="定位卫星"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/satnum_inuse"
+                    android:layout_width="150dp"
+
+                    android:layout_height="match_parent" android:padding="2dp"
+                    android:textStyle="bold"/>
+
+            </TableRow>
+
+
+        </TableLayout>
+
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:id="@+id/time"   android:textStyle="bold" android:layout_gravity="right" android:gravity="right"/>
+    </LinearLayout>
 
     <com.exams.demo10_lbs.BarChartView
         android:id="@+id/bar_chart"
         android:layout_width="match_parent"
         android:layout_height="600dp"
-        />
+    />
 
 </LinearLayout>
