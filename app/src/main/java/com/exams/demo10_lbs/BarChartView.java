@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static android.R.attr.type;
 
@@ -54,6 +55,7 @@ public class BarChartView extends View {
     private int barSpace;
     //the width of the line.
     private int lineStrokeWidth;
+    public boolean[] array_checkbox;
 
     /**
      * The x-position of y-index and the y-position of the x-index..
@@ -138,16 +140,34 @@ public class BarChartView extends View {
         checkLeftMoving();
 
         textPaint.setTextSize(ScreenUtils.dp2px(getContext(), 16));
+        if ((int) leftMoving < 0) {
+            barRect.left = (int) y_index_startX + barSpace;
+        } else {
+            barRect.left = (int) y_index_startX + barSpace - (int) leftMoving;
+        }
+
         if (mItems != null) {
             String str = String.valueOf(mItems.length);
             Log.i("mItems.length ", str);
+            int count=0;
             for (int i = 0; i < mItems.length; i++) {
-                //draw bar rect
-                if ((int) leftMoving < 0) {
-                    barRect.left = (int) y_index_startX + barItemWidth * i + barSpace * (i + 1);
-                } else {
-                    barRect.left = (int) y_index_startX + barItemWidth * i + barSpace * (i + 1) - (int) leftMoving;
+                //choose combination of gps
+
+                if (!filterGps(Integer.valueOf(mItems[i].itemType))) {
+
+                    continue;
                 }
+                count++;
+                Log.i("test1", String.valueOf(filterGps(Integer.valueOf(mItems[i].itemType))));
+                if (count > 1)
+                    barRect.left += barItemWidth + barSpace;
+
+                //draw bar rect
+//                if ((int) leftMoving < 0) {
+//                    barRect.left = (int) y_index_startX + barItemWidth * i + barSpace * (i + 1);
+//                } else {
+//                    barRect.left = (int) y_index_startX + barItemWidth * i + barSpace * (i + 1) - (int) leftMoving;
+//                }
 
 
                 barRect.top = topMargin * 2 + (int) (maxHeight * (1.0f - mItems[i].itemValue / maxValue));
@@ -347,7 +367,7 @@ public class BarChartView extends View {
     }
 
 
-    public void setItems(BarChartItemBean[] items) {
+    public void setItems(BarChartItemBean[] items, boolean[] array) {
         if (items == null) {
             throw new RuntimeException("BarChartView.setItems(): the param items cannot be null.");
         }
@@ -356,6 +376,7 @@ public class BarChartView extends View {
         }
 
         this.mItems = items;
+        array_checkbox = array;
 
         //Calculate the max value.
         maxValue = items[0].itemValue;
@@ -504,6 +525,56 @@ public class BarChartView extends View {
             // Assume US NAVSTAR for now, since we don't have any other info on sat-to-PRN mappings
             return GnssType.NAVSTAR;
         }
+    }
+
+    /**
+     * @param value
+     * @return
+     */
+    public boolean filterGps(int prn) {
+        GnssType type = getGnssType(prn);
+        boolean flag = true;
+        if (array_checkbox != null) {
+            switch (type) {
+                case BEIDOU:
+                    if (array_checkbox[0]) {
+                        flag = true;
+                    } else
+                        flag = false;
+                    break;
+
+                case NAVSTAR:
+                    if (array_checkbox[1]) {
+                        flag = true;
+                    } else
+                        flag = false;
+                    break;
+
+                case GLONASS:
+                    if (array_checkbox[2]) {
+                        flag = true;
+                    } else
+                        flag = false;
+                    break;
+
+                case GALILEO:
+                    if (array_checkbox[3]) {
+                        flag = true;
+                    } else
+                        flag = false;
+                    break;
+
+                case QZSS:
+                    if (array_checkbox[4]) {
+                        flag = true;
+                    } else
+                        flag = false;
+                    break;
+            }
+        }
+
+
+        return flag;
     }
 
     private float getRangeTop(float value) {

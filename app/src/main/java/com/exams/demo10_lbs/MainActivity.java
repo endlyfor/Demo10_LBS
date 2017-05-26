@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
     private Switch mSwitch;  //GPS on/off switch
     boolean mStarted;
     ArrayList<BarChartView.BarChartItemBean> mArrayItems;
+    boolean[] array_checkbox;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -244,13 +245,67 @@ public class MainActivity extends Activity {
                 }
 
 
-                    mBarChartView.setItems(items);
+                    mBarChartView.setItems(items,array_checkbox);
                 }
 
 
             }
 
         }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        boolean success;
+        // Handle menu item selection
+        switch (item.getItemId()) {
+            case R.id.gps_switch:
+                // Do nothing - this is handled by a separate listener added in onCreateOptionsMenu()
+                return true;
+            case R.id.menu_settings:
+                /**
+                 * 待处理
+                 */
+
+                return true;
+            case R.id.menu_gps_selection:
+                Intent intent=new Intent(MainActivity.this, GPS_Selection.class);
+                startActivityForResult(intent,0);
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+
+            case 0:         // 子窗口ChildActivity的回传数据
+
+                if (resultCode==RESULT_OK) {
+
+                    array_checkbox = data.getBooleanArrayExtra("array_checkbox");
+                    Log.i("array_checkbox",String.valueOf(array_checkbox[0]));
+                    Log.i("array_checkbox",String.valueOf(array_checkbox[1]));
+                    Log.i("array_checkbox",String.valueOf(array_checkbox[2]));
+                    Log.i("array_checkbox",String.valueOf(array_checkbox[3]));
+                    Log.i("array_checkbox",String.valueOf(array_checkbox[4]));
+                    if (array_checkbox != null) {
+                        //处理代码在此地
+                      // Toast.makeText(this,String.valueOf(array_checkbox[0]), Toast.LENGTH_LONG).show();
+                    }
+                }
+                break;
+            default:
+                //其它窗口的回传数据
+                break;
+        }
+
+    }
+
 
 
     @Override
